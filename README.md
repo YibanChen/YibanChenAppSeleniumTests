@@ -2,7 +2,7 @@
 
 ## Setup
 
-Please make sure you are running the YibanChen build locally and that it is reachable at http://localhost:3000
+Please make sure you are running the [YibanChen-app](https://github.com/YibanChen/yibanchen-app) locally and that it is reachable at http://localhost:3000
 
 Also make sure that you do not already have Google Chrome opened.
 

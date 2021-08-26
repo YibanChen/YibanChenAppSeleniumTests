@@ -20,7 +20,7 @@ class YibanChenTestSuite(unittest.TestCase):
 
         chrome_options = Options()
         chrome_options.add_extension(ext_dir)
-        chrome_options.add_argument("user-data-dir=/Users/maxwellrosenberg/Library/Application Support/Google/Chrome/")
+        chrome_options.add_argument("user-data-dir=~/Library/Application Support/Google/Chrome/")
         driver = webdriver.Chrome(options=chrome_options)
 
     def test_monolith(self):

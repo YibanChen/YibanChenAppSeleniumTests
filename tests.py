@@ -13,40 +13,29 @@ class YibanChenTestSuite(unittest.TestCase):
         chrome_options.add_extension(ext_dir)
         self.driver = webdriver.Chrome(options=chrome_options)
 
-    @classmethod
-    def setUpClass(cls):
-
-        ext_dir = "extension_0_38_3_0.crx.crx"
-
-        chrome_options = Options()
-        chrome_options.add_extension(ext_dir)
-        chrome_options.add_argument("user-data-dir=~/Library/Application Support/Google/Chrome/")
-        driver = webdriver.Chrome(options=chrome_options)
-
-    def test_monolith(self):
+    def test_a(self):
         driver = self.driver
         driver.get("http://localhost:3000/inbox")
         self.assertIn("YibanChen", driver.title)
 
-        # Use these 45 seconds to sign into the polkadot extension. If more time is required, increase the number of seconds.
-
-        time.sleep(45)
+        input("Press any key to continue running tests...")
 
         # Inbox test
 
         try:
-            reply_button = driver.find_element_by_xpath('//*[@id="wide"]/div/div[1]/div/button[1]')
+            reply_button = driver.find_element_by_xpath('//*[@id="wide"]/div/div[1]/div[4]/button[1]')
             reply_button.click()
             webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
         except:
-            no_messages = driver.find_element_by_xpath('//*[@id="parent"]/div[1]/div/p').text
+            no_messages = driver.find_element_by_xpath('//*[@id="parent"]/div[1]/div[2]/div/p').text
             self.assertEqual("No messages found", no_messages)
-
-        # Composition Test
 
         compose_button = driver.find_element_by_xpath('//*[@id="responsive-navbar-nav"]/div[1]/a[2]')
         compose_button.click()
+
+        driver.get("http://localhost:3000/compose")
+        time.sleep(5)
 
         to_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[1]/textarea')
         to_field.clear()
@@ -104,6 +93,7 @@ class YibanChenTestSuite(unittest.TestCase):
 
         account_dropdown_button = driver.find_element_by_xpath('//*[@id="dropdown-basic"]')
         account_dropdown_button.click()
+        time.sleep(1)
 
         account_select_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/div/div/div[1]/a')
         account_select_button.click()

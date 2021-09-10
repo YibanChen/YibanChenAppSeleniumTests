@@ -43,3 +43,5 @@ Some manual configuration is required after running the above command before the
 Selenium will open a chrome browser and navigate to the YibanChen site. The website will inform you that "An application, self-identifying as YibanChen is requesting access". Allow this access, and then create a new account through the polkadot extension, or optionally import your own using the account's mnemonic seed. Reload the page (a hard refresh CMD + SHIFT +R may be required ) and then select your account from the dropdown menu that appears.
 
 After completing these tests, navigate back to the termninal running the test script and press any key to continue running the tests.
+
+[Example video of running the test](https://youtu.be/nkAdblH0GW0)

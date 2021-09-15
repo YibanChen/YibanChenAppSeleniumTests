@@ -10,8 +10,9 @@ class YibanChenTestSuite(unittest.TestCase):
         ext_dir = "extension_0_38_3_0.crx.crx"
 
         chrome_options = Options()
+        chrome_options.add_argument("--no-sandbox")
         chrome_options.add_extension(ext_dir)
-        self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver = webdriver.Chrome(executable_path="./chromedriver", options=chrome_options)
 
     def test_a(self):
         driver = self.driver
@@ -31,52 +32,32 @@ class YibanChenTestSuite(unittest.TestCase):
             no_messages = driver.find_element_by_xpath('//*[@id="parent"]/div[1]/div[2]/div/p').text
             self.assertEqual("No messages found", no_messages)
 
-        compose_button = driver.find_element_by_xpath('//*[@id="responsive-navbar-nav"]/div[1]/a[2]')
+        # time.sleep(1)
+
+        compose_button = driver.find_element_by_xpath("/html/body/div/div/nav/div/div/div[1]/a[2]")
         compose_button.click()
 
         driver.get("http://localhost:3000/compose")
-        time.sleep(5)
+        time.sleep(3)
 
-        to_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[1]/textarea')
-        to_field.clear()
-        to_field.send_keys("5H3tev113c7xnoLV8NJMAUFg15Egs4SR1sakKRpPQbszjvFd")
-        body_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[3]/textarea')
-        body_field.clear()
-        body_field.send_keys("body of message")
-        send_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[4]/button')
-        send_button.click()
-
-        # Wait for the alert to be displayed
-        time.sleep(1)
-
-        # Store the alert in a variable for reuse
-        alert = driver.switch_to.alert
-
-        # Store the alert text in a variable
-        alert_text = alert.text
-        self.assertEqual("You are about to send your message with no subject. Continue?", alert_text)
-
-        # Press the Cancel button
-        alert.dismiss()
-
-        body_field.clear()
-
-        to_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[1]/textarea')
+        to_field = driver.find_element_by_xpath("/html/body/div[1]/div/div/div/div[1]/textarea")
         to_field.clear()
         # Junk wallet
-        to_field.send_keys("bad address")
-        subject_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[2]/textarea')
-        subject_field.clear()
-        body_field = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[3]/textarea')
-        send_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/div/div[4]/button')
-        send_button.click()
-        time.sleep(1)
+        to_field.send_keys("malformed")
 
-        expected_error_message = driver.find_element_by_xpath('//*[@id="root"]/div/div/p').text
-        self.assertIn("The recipient address you have entered is not a valid Polkadot address.", expected_error_message)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(5)
+        send_button = driver.find_element_by_xpath("/html/body/div[1]/div/div/div/div[4]/button")
+        send_button.click()
+
+        time.sleep(3)
+
+        actual_error_message = driver.find_element_by_xpath('//*[@id="root"]/div/div/p').text
+        expected_error_message = "The recipient address you have entered is not a valid Polkadot address."
+        self.assertIn(expected_error_message, actual_error_message)
         back_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/button')
         back_button.click()
-        time.sleep(1)
+        time.sleep(2)
 
         # Settings page test
 
@@ -85,7 +66,7 @@ class YibanChenTestSuite(unittest.TestCase):
 
         pinata_key_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/div[3]/form/label/div/div[1]')
         pinata_key_button.click()
-        time.sleep(5)
+        time.sleep(2)
 
         balance_text = driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/h5').text
 
@@ -93,10 +74,6 @@ class YibanChenTestSuite(unittest.TestCase):
 
         account_dropdown_button = driver.find_element_by_xpath('//*[@id="dropdown-basic"]')
         account_dropdown_button.click()
-        time.sleep(1)
-
-        account_select_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/div/div/div[1]/a')
-        account_select_button.click()
 
     def tearDown(self):
         self.driver.close()

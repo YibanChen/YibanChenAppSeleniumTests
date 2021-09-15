@@ -2,13 +2,13 @@
 
 ## About the tests
 
-These are automated web browser tests; the Selenium client interacts with the Chrome Driver to ensure that the web functionalties work as expected in the browser environment. Some manual configuration is required to run the tests as the chromedriver extension cannot access your existing polkadot wallets.
+These are automated web browser tests; the Selenium client interacts with the Chrome Driver to ensure that the web functionalities work as expected in the browser environment. Some manual configuration is required to run the tests as the chromedriver extension cannot access your existing polkadot wallets.
 
-While the tests do not currently cover the web app's use of our blockchain API due to security concerns and other issues, mainly due to the fact that transacations performed through our blockchain API require tokens, we plan to extend our coverage to include these interactions by making use of a test blockchain operating seperately from the main blockchain.
+While the tests do not currently cover the web app's use of our blockchain API due to security concerns and other issues, mainly due to the fact that transactions performed through our blockchain API require tokens, we plan to extend our coverage to include these interactions by making use of a test blockchain operating separately from the main blockchain.
 
 ## Setup
 
-Make sure you are running the YibanChen [YibanChen-app](https://github.com/YibanChen/yibanchen-app) build locally and that it is reachable at http://localhost:3000
+Make sure you are running the YibanChen build locally and that it is reachable at http://localhost:3000
 
 Also check that you do not already have Google Chrome opened, as the tests will automatically fail if Chrome is already opened in another window.
 
@@ -42,6 +42,4 @@ Some manual configuration is required after running the above command before the
 
 Selenium will open a chrome browser and navigate to the YibanChen site. The website will inform you that "An application, self-identifying as YibanChen is requesting access". Allow this access, and then create a new account through the polkadot extension, or optionally import your own using the account's mnemonic seed. Reload the page (a hard refresh CMD + SHIFT +R may be required ) and then select your account from the dropdown menu that appears.
 
-After completing these tests, navigate back to the termninal running the test script and press any key to continue running the tests.
-
-[Example video of running the test](https://youtu.be/nkAdblH0GW0)
+After completing these tests, navigate back to the terminal running the test script and press any key to continue running the tests.
